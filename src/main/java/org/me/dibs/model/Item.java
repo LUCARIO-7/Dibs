@@ -22,4 +22,7 @@ public class Item {
     private String contact;
     private String time;
     Boolean isLost;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    User user;
 }

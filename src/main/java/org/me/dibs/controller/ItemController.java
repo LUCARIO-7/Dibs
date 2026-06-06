@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -17,9 +18,9 @@ public class ItemController {
     @Autowired
     ItemService itemService;
     @PostMapping("/item")
-    ResponseEntity<String> addItem(@RequestPart Item item,@RequestPart MultipartFile image) throws IOException {
+    ResponseEntity<String> addItem(@RequestPart Item item, @RequestPart MultipartFile image, Principal principal) throws IOException {
         itemService.addItem(item,image);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(principal.getName(),HttpStatus.OK);
     }
     @GetMapping("lostitems")
     ResponseEntity<List<Item>> getLostItems(){
