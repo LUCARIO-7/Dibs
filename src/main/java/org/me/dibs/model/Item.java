@@ -17,7 +17,6 @@ public class Item {
     private String name;
     private String description;
     @Lob
-    @JsonFormat(shape = JsonFormat.Shape.STRING)
     private byte[] image;
     private String location;
     private String contact;

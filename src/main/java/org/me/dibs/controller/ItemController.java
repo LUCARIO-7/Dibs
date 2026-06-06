@@ -1,7 +1,6 @@
-package org.me.dibs.contrller;
+package org.me.dibs.controller;
 
 import org.me.dibs.model.Item;
-import org.me.dibs.Repository.ItemRepository;
 import org.me.dibs.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,27 +16,9 @@ import java.util.List;
 public class ItemController {
     @Autowired
     ItemService itemService;
-    @PostMapping("/")
-    ResponseEntity<String> addItem(@RequestParam("image") MultipartFile file,
-                                   @RequestParam("name") String name,
-                                   @RequestParam("description") String description,
-                                   @RequestParam("location") String location,
-                                   @RequestParam("contact") String contact,
-                                   @RequestParam("time") String time,
-                                   @RequestParam("isLost") Boolean isLost) throws IOException {
-        Item newItem = new Item();
-        newItem.setName(name);
-        newItem.setDescription(description);
-
-        // Extract the raw binary data from the uploaded file
-        newItem.setImage(file.getBytes());
-
-        newItem.setLocation(location);
-        newItem.setContact(contact);
-        newItem.setTime(time);
-        newItem.setIsLost(isLost);
-
-        itemService.addItem(newItem);
+    @PostMapping("/item")
+    ResponseEntity<String> addItem(@RequestPart Item item,@RequestPart MultipartFile image) throws IOException {
+        itemService.addItem(item,image);
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @GetMapping("lostitems")
