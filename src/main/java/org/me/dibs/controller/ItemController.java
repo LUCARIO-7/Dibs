@@ -19,16 +19,16 @@ public class ItemController {
     ItemService itemService;
     @PostMapping("/item")
     ResponseEntity<String> addItem(@RequestPart Item item, @RequestPart MultipartFile image, Principal principal) throws IOException {
-        itemService.addItem(item,image);
+        itemService.addItem(item,image,principal);
         return new ResponseEntity<>(principal.getName(),HttpStatus.OK);
     }
     @GetMapping("lostitems")
-    ResponseEntity<List<Item>> getLostItems(){
-            return  new ResponseEntity<>(itemService.getLostItems(),HttpStatus.OK);
+    ResponseEntity<List<Item>> getLostItems(Principal principal){
+            return  new ResponseEntity<>(itemService.getLostItems(principal),HttpStatus.OK);
     }
     @GetMapping("founditems")
-    ResponseEntity<List<Item>> getFoundItems(){
-            return new ResponseEntity<>(itemService.getFoundItems(),HttpStatus.OK);
+    ResponseEntity<List<Item>> getFoundItems(Principal principal){
+            return new ResponseEntity<>(itemService.getFoundItems(principal),HttpStatus.OK);
     }
     @DeleteMapping("deleteItem")
     ResponseEntity<String> removeItem(@RequestParam int i){
