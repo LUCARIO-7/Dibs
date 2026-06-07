@@ -1,6 +1,7 @@
 package org.me.dibs.controller;
 
 import org.me.dibs.model.User;
+import org.me.dibs.service.JwtService;
 import org.me.dibs.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,8 @@ public class userController {
     AuthenticationManager authenticationManager;
     @Autowired
     userService UserService;
+    @Autowired
+    JwtService jwtService;
     @PostMapping("/register")
     ResponseEntity<String> registerUser(@RequestBody  User user){
         System.out.println("password is"+user.getPassword());
@@ -31,7 +34,7 @@ public class userController {
                 new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword())
         );
         if(authentication.isAuthenticated())
-            return "authenticated";
+            return jwtService.generateToken(user.getUsername());
         else
             return  "not authenticated";
     }

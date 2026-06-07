@@ -34,7 +34,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http){
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(request->request.requestMatchers("/register","/login")
+                .authorizeHttpRequests(request->
+                        request.requestMatchers("/register","/login")
                         .permitAll()
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults())
