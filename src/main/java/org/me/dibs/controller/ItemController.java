@@ -16,6 +16,10 @@ import java.util.List;
 public class ItemController {
     @Autowired
     ItemService itemService;
+    @GetMapping("/")
+    ResponseEntity<String> homePage(){
+        return  new ResponseEntity<>("hi",HttpStatus.OK);
+    }
     @PostMapping("/item")
     ResponseEntity<String> addItem(@RequestPart Item item, @RequestPart MultipartFile image, Principal principal) throws IOException {
         itemService.addItem(item,image,principal);

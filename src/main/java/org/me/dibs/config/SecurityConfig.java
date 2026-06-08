@@ -41,9 +41,10 @@ public class SecurityConfig {
                         request.requestMatchers("/register","/login")
                         .permitAll()
                         .anyRequest().authenticated())
+                .oauth2Login(outh2-> outh2.defaultSuccessUrl("/"))
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->
-                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                        session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
