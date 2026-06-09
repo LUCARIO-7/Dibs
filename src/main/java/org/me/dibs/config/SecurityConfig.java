@@ -1,6 +1,6 @@
 package org.me.dibs.config;
 
-import org.me.dibs.service.MyUserDetailsService;
+import org.me.dibs.service.OidcService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -26,6 +25,8 @@ public class SecurityConfig {
     UserDetailsService userDetailsService;
     @Autowired
     JwtFilter jwtFilter;
+    @Autowired
+    OidcService oidcUserSerivice;
     @Bean
     public AuthenticationProvider authenticationProvider(){
         DaoAuthenticationProvider authprovider = new DaoAuthenticationProvider(userDetailsService);
@@ -38,10 +39,12 @@ public class SecurityConfig {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request->
-                        request.requestMatchers("/register","/login")
+                        request.requestMatchers("/register","/login","/")
                         .permitAll()
                         .anyRequest().authenticated())
-                .oauth2Login(outh2-> outh2.defaultSuccessUrl("/"))
+                .oauth2Login(outh2-> outh2
+                        .userInfoEndpoint(userInfo ->userInfo.oidcUserService(oidcUserSerivice))
+                        .defaultSuccessUrl("/"))
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
