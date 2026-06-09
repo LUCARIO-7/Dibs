@@ -102,6 +102,7 @@
     </dependencies>
 
     <build>
+        <finalName>Dibs</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
