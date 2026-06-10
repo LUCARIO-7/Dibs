@@ -39,4 +39,8 @@ public class ItemService {
         Item it=itemRepository.findById(i).orElse(new Item());
         itemRepository.delete(it);
     }
+    @Transactional(readOnly = true)
+    public List<Item> searchItem(String name, Principal principal) {
+        return  itemRepository.findByUserUsernameAndNameIsContaining(principal.getName(),name);
+    }
 }

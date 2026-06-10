@@ -38,4 +38,9 @@ public class ItemController {
         itemService.removeItem(i);
         return  new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/search/{name}")
+    ResponseEntity<List<Item>> searchItem(@PathVariable String name,Principal principal){
+        List<Item> items=itemService.searchItem(name,principal);
+        return  new ResponseEntity<>(items,HttpStatus.OK);
+    }
 }
