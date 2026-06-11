@@ -16,12 +16,12 @@ public class OidcService extends OidcUserService {
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
        OidcUser oidcUser=super.loadUser(userRequest);
-       String email=oidcUser.getAttribute("email");
-       User user=UserService.getUser(email);
-       System.out.println(email);
+       //String email=oidcUser.getEmail();
+       String username=oidcUser.getName();
+       User user=UserService.getUser(username);
        if(user==null){
            User user1=new User();
-           user1.setUsername(email);
+           user1.setUsername(username);
            user1.setPassword("");
            UserService.addUser(user1);
        }

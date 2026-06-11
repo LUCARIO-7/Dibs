@@ -12,7 +12,7 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@CrossOrigin
+@CrossOrigin(origins = "http://localhost:5173/")
 public class ItemController {
     @Autowired
     ItemService itemService;
@@ -25,11 +25,11 @@ public class ItemController {
         itemService.addItem(item,image,principal);
         return new ResponseEntity<>(principal.getName(),HttpStatus.OK);
     }
-    @GetMapping("lostitems")
+    @GetMapping("/lostitems")
     ResponseEntity<List<Item>> getLostItems(Principal principal){
             return  new ResponseEntity<>(itemService.getLostItems(principal),HttpStatus.OK);
     }
-    @GetMapping("founditems")
+    @GetMapping("/founditems")
     ResponseEntity<List<Item>> getFoundItems(Principal principal){
             return new ResponseEntity<>(itemService.getFoundItems(principal),HttpStatus.OK);
     }

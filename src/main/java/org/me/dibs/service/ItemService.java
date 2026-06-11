@@ -31,6 +31,7 @@ public class ItemService {
     }
     @Transactional(readOnly = true)
     public List<Item> getFoundItems(Principal principal){
+        System.out.println(principal.getName());
         List<Item> items=itemRepository.findByUserUsernameAndIsLostFalse(principal.getName());
         return items;
     }
@@ -41,6 +42,7 @@ public class ItemService {
     }
     @Transactional(readOnly = true)
     public List<Item> searchItem(String name, Principal principal) {
+
         return  itemRepository.findByUserUsernameAndNameIsContaining(principal.getName(),name);
     }
 }
