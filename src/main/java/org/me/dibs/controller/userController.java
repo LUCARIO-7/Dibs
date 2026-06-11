@@ -1,5 +1,7 @@
 package org.me.dibs.controller;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import org.me.dibs.model.User;
 import org.me.dibs.service.JwtService;
 import org.me.dibs.service.userService;
@@ -31,17 +33,25 @@ public class userController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     @PostMapping("/login")
-    public String login(@RequestBody User user){
+    public String login(@RequestBody User user, HttpServletResponse response){
         Authentication authentication= authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword())
         );
-        if(authentication.isAuthenticated())
-            return jwtService.generateToken(user.getUsername());
-        else
-            return  "not authenticated";
+
+        String token=jwtService.generateToken(user.getUsername());
+        Cookie cookie= new Cookie("jwtoken", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false);
+        cookie.setPath("/");
+        cookie.setMaxAge(24*60*60);
+        response.addCookie(cookie);
+        return  "login successfull";
     }
     @GetMapping("/user")
-    ResponseEntity<Principal> getCurrentUser(Principal principal){
-        return new ResponseEntity<>(principal,HttpStatus.OK);
+    ResponseEntity<String> getCurrentUser(Authentication authentication){
+        if(authentication!=null && authentication.isAuthenticated()){
+            return new ResponseEntity<>(authentication.getName(),HttpStatus.OK);
+        }
+        return new ResponseEntity<>("not autheticated",HttpStatus.UNAUTHORIZED);
     }
 }

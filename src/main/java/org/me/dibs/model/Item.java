@@ -21,7 +21,8 @@ public class Item {
     private String location;
     private String contact;
     private String time;
-    Boolean isLost;
+    private  Boolean isLost;
+    private  Boolean isClaimed=false;
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;

@@ -2,6 +2,7 @@ package org.me.dibs.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.me.dibs.service.JwtService;
@@ -27,8 +28,16 @@ public class JwtFilter extends OncePerRequestFilter {
         String authHeader=request.getHeader("Authorization");
         String token=null;
         String username=null;
-        if(authHeader!=null && authHeader.startsWith("Bearer")){
-            token=authHeader.substring(7);
+        Cookie[] cookies=request.getCookies();
+        for(Cookie cookie:cookies){
+           // System.out.println(cookie.getValue());
+            if(cookie.getName().equals("jwtoken")){
+                token=cookie.getValue();
+                break;
+            }
+        }
+
+        if(token!=null){
             username=jwtService.extractUserName(token);
         }
         if(username!=null && SecurityContextHolder.getContext().getAuthentication()==null){
