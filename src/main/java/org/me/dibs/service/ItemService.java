@@ -49,4 +49,15 @@ public class ItemService {
     public List<Item> getLostItems() {
         return  itemRepository.findByIsLostTrue();
     }
+    @Transactional(readOnly = true)
+    public List<Item> getFoundItems() {
+        return  itemRepository.findByIsLostFalse();
+    }
+
+    public void claimItem(Integer itemid) {
+        Item item= itemRepository.findById(itemid).orElse(new Item());
+        item.setIsClaimed(true);
+        itemRepository.save(item);
+
+    }
 }

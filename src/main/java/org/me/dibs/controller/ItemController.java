@@ -29,6 +29,10 @@ public class ItemController {
     ResponseEntity<List<Item>> getLostItems(){
         return  new ResponseEntity<>(itemService.getLostItems(),HttpStatus.OK);
     }
+    @GetMapping("/founditems")
+    ResponseEntity<List<Item>> getFoundItems(){
+        return  new ResponseEntity<>(itemService.getFoundItems(),HttpStatus.OK);
+    }
     @GetMapping("/mylostitems")
     ResponseEntity<List<Item>> getMyLostItems(Principal principal){
             return  new ResponseEntity<>(itemService.getMyLostItems(principal),HttpStatus.OK);
@@ -46,5 +50,10 @@ public class ItemController {
     ResponseEntity<List<Item>> searchItem(@PathVariable String name,Principal principal){
         List<Item> items=itemService.searchItem(name,principal);
         return  new ResponseEntity<>(items,HttpStatus.OK);
+    }
+    @GetMapping("/claimitem/{itemid}")
+    public ResponseEntity<?> claimItem (@PathVariable Integer itemid){
+        itemService.claimItem(itemid);
+        return  ResponseEntity.ok("ok");
     }
 }
