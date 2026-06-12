@@ -25,12 +25,12 @@ public class ItemService {
         itemRepository.save(item);
     }
     @Transactional(readOnly = true)
-    public List<Item> getLostItems(Principal principal){
+    public List<Item> getMyLostItems(Principal principal){
         List<Item> items=itemRepository.findByUserUsernameAndIsLostTrue(principal.getName());
         return  items;
     }
     @Transactional(readOnly = true)
-    public List<Item> getFoundItems(Principal principal){
+    public List<Item> getMyFoundItems(Principal principal){
         System.out.println(principal.getName());
         List<Item> items=itemRepository.findByUserUsernameAndIsLostFalse(principal.getName());
         return items;
@@ -44,5 +44,9 @@ public class ItemService {
     public List<Item> searchItem(String name, Principal principal) {
 
         return  itemRepository.findByUserUsernameAndNameIsContaining(principal.getName(),name);
+    }
+    @Transactional(readOnly = true)
+    public List<Item> getLostItems() {
+        return  itemRepository.findByIsLostTrue();
     }
 }
