@@ -54,10 +54,10 @@ public class ItemService {
         return  itemRepository.findByIsLostFalse();
     }
 
-    public void claimItem(Integer itemid) {
+    public void claimItem(Integer itemid, Principal principal) {
         Item item= itemRepository.findById(itemid).orElse(new Item());
         item.setIsClaimed(true);
+        item.setUser1(UserService.getUser(principal.getName()));
         itemRepository.save(item);
-
     }
 }

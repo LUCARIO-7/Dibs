@@ -52,8 +52,8 @@ public class ItemController {
         return  new ResponseEntity<>(items,HttpStatus.OK);
     }
     @GetMapping("/claimitem/{itemid}")
-    public ResponseEntity<?> claimItem (@PathVariable Integer itemid){
-        itemService.claimItem(itemid);
+    public ResponseEntity<?> claimItem (@PathVariable Integer itemid,Principal principal){
+        itemService.claimItem(itemid,principal);
         return  ResponseEntity.ok("ok");
     }
 }

@@ -26,4 +26,7 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "user_id")
     User user;
+    @ManyToOne
+    @JoinColumn(name = "claimed_id")
+    User user1;
 }
