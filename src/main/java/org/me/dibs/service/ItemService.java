@@ -60,4 +60,9 @@ public class ItemService {
         item.setUser1(UserService.getUser(principal.getName()));
         itemRepository.save(item);
     }
+    @Transactional(readOnly = true)
+    public List<Item> getClaimedItems(String name) {
+        List<Item> claimedItems=itemRepository.findByUserUsernameAndIsClaimedTrue(name);
+        return claimedItems;
+    }
 }

@@ -2,7 +2,9 @@ package org.me.dibs.controller;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+import org.me.dibs.model.Item;
 import org.me.dibs.model.User;
+import org.me.dibs.service.ItemService;
 import org.me.dibs.service.JwtService;
 import org.me.dibs.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -24,6 +27,8 @@ public class userController {
     AuthenticationManager authenticationManager;
     @Autowired
     userService UserService;
+    @Autowired
+    ItemService itemService;
     @Autowired
     JwtService jwtService;
     @PostMapping("/register")
@@ -53,5 +58,10 @@ public class userController {
             return new ResponseEntity<>(authentication.getName(),HttpStatus.OK);
         }
         return new ResponseEntity<>("not autheticated",HttpStatus.UNAUTHORIZED);
+    }
+    @GetMapping("/claimedItems")
+    ResponseEntity<List<Item>> getClaimedItems(Principal principal){
+        List<Item> claimedItems= itemService.getClaimedItems(principal.getName());
+        return new ResponseEntity<>(claimedItems,HttpStatus.OK);
     }
 }

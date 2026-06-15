@@ -14,4 +14,5 @@ public interface ItemRepository extends JpaRepository<Item,Integer> {
    List<Item> findByUserUsernameAndIsLostTrue(String username);
    List<Item> findByUserUsernameAndIsLostFalse(String username);
    List<Item> findByUserUsernameAndNameIsContaining(String username,String name);
+   List<Item> findByUserUsernameAndIsClaimedTrue(String username);
 }

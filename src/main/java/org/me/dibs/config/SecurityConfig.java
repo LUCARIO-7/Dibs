@@ -50,7 +50,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .oauth2Login(outh2-> outh2
                         .userInfoEndpoint(userInfo ->userInfo.oidcUserService(oidcUserSerivice))
-                        .defaultSuccessUrl("/"))
+                        .defaultSuccessUrl("http://localhost:5173/"))
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
