@@ -56,4 +56,7 @@ public class ItemController {
         itemService.claimItem(itemid,principal);
         return  ResponseEntity.ok("ok");
     }
+    
+    
+    
 }

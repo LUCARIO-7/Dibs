@@ -64,4 +64,5 @@ public class userController {
         List<Item> claimedItems= itemService.getClaimedItems(principal.getName());
         return new ResponseEntity<>(claimedItems,HttpStatus.OK);
     }
+
 }

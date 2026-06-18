@@ -43,7 +43,7 @@ public class ItemService {
     @Transactional(readOnly = true)
     public List<Item> searchItem(String name, Principal principal) {
 
-        return  itemRepository.findByUserUsernameAndNameIsContaining(principal.getName(),name);
+        return  itemRepository.findByNameIsContaining(name);
     }
     @Transactional(readOnly = true)
     public List<Item> getLostItems() {
@@ -62,7 +62,6 @@ public class ItemService {
     }
     @Transactional(readOnly = true)
     public List<Item> getClaimedItems(String name) {
-        List<Item> claimedItems=itemRepository.findByUserUsernameAndIsClaimedTrue(name);
-        return claimedItems;
+        return itemRepository.findByUser1UsernameAndIsClaimedTrue(name);
     }
 }
