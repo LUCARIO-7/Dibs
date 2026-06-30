@@ -15,8 +15,11 @@ import org.springframework.security.authentication.RememberMeAuthenticationToken
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.authorization.AuthorizationManager;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
@@ -32,16 +35,19 @@ public class userController {
     @Autowired
     JwtService jwtService;
     @PostMapping("/register")
-    ResponseEntity<String> registerUser(@RequestBody  User user){
-        System.out.println("password is"+user.getPassword());
-        UserService.addUser(user);
+    ResponseEntity<String> registerUser(@RequestPart  User user, @RequestPart MultipartFile profilePicture) throws IOException {
+        UserService.addUser(user,profilePicture);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
     @PostMapping("/login")
     public String login(@RequestBody User user, HttpServletResponse response){
-        Authentication authentication= authenticationManager.authenticate(
+        try{
+            Authentication authentication= authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(user.getUsername(),user.getPassword())
         );
+        } catch (AuthenticationException e) {
+            System.out.println(e);
+        }
 
         String token=jwtService.generateToken(user.getUsername());
         Cookie cookie= new Cookie("jwtoken", token);
@@ -53,11 +59,12 @@ public class userController {
         return  "login successfull";
     }
     @GetMapping("/user")
-    ResponseEntity<String> getCurrentUser(Authentication authentication){
+    ResponseEntity<User> getCurrentUser(Authentication authentication){
         if(authentication!=null && authentication.isAuthenticated()){
-            return new ResponseEntity<>(authentication.getName(),HttpStatus.OK);
+            User u=UserService.getUser(authentication.getName());
+            return new ResponseEntity<>(u,HttpStatus.OK);
         }
-        return new ResponseEntity<>("not autheticated",HttpStatus.UNAUTHORIZED);
+        return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
     }
     @GetMapping("/claimedItems")
     ResponseEntity<List<Item>> getClaimedItems(Principal principal){

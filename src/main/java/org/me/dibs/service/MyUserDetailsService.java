@@ -1,5 +1,6 @@
 package org.me.dibs.service;
 
+import jakarta.transaction.Transactional;
 import org.me.dibs.Repository.userRepository;
 import org.me.dibs.model.User;
 import org.me.dibs.controller.userPrincipal;
@@ -14,6 +15,7 @@ public class MyUserDetailsService implements UserDetailsService {
     @Autowired
     userRepository userRepo;
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user= userRepo.findByUsername(username);
         if(user==null)

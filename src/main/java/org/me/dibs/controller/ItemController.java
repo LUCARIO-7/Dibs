@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:5173/")
@@ -56,7 +57,9 @@ public class ItemController {
         itemService.claimItem(itemid,principal);
         return  ResponseEntity.ok("ok");
     }
-    
-    
-    
+    @GetMapping("getItem/{id}")
+    public ResponseEntity<Item> getItem(@PathVariable Integer  id){
+        Optional<Item> item=itemService.getItem(id);
+        return new ResponseEntity(item,HttpStatus.OK);
+    }
 }

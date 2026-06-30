@@ -19,6 +19,9 @@ public class User {
     private  Integer id;
     private  String username;
     private  String password;
+    @Lob
+
+    private byte[]  profilePicture;
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Item> items;

@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ItemService {
@@ -44,6 +45,11 @@ public class ItemService {
     public List<Item> searchItem(String name, Principal principal) {
 
         return  itemRepository.findByNameIsContaining(name);
+    }
+    @Transactional(readOnly = true)
+    public Optional<Item> getItem(int id) {
+
+        return  itemRepository.findById(id);
     }
     @Transactional(readOnly = true)
     public List<Item> getLostItems() {
