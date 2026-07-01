@@ -8,6 +8,7 @@ import org.me.dibs.service.ItemService;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,6 +19,7 @@ import static org.mockito.Mockito.mock;
 
 @ExtendWith(MockitoExtension.class)
 @DataJpaTest
+@ActiveProfiles("test")
 public class ItemServiceTests {
     @Mock
     ItemRepository itemRepository;
