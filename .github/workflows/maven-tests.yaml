@@ -22,5 +22,5 @@ jobs:
           cache: maven
 
       - name: Run JUnit Tests
-        run: .\mvnw test
+        run: ./mvnw test
 
