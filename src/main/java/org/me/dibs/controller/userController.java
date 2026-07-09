@@ -71,5 +71,9 @@ public class userController {
         List<Item> claimedItems= itemService.getClaimedItems(principal.getName());
         return new ResponseEntity<>(claimedItems,HttpStatus.OK);
     }
-
+    @GetMapping("/postedItems")
+    ResponseEntity<List<Item>> getPostedItems(Principal principal){
+        List<Item> lostItems=itemService.getMyLostItems(principal);
+        return new ResponseEntity<>(lostItems,HttpStatus.OK);
+    }
 }
