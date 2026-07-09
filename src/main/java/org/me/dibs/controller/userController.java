@@ -37,7 +37,7 @@ public class userController {
     @Autowired
     JwtService jwtService;
     @PostMapping("/register")
-    ResponseEntity<String> registerUser(@RequestPart  User user, @RequestPart MultipartFile profilePicture) throws IOException {
+    ResponseEntity<String> registerUser(@RequestPart User user, @RequestPart(required = false) MultipartFile profilePicture) throws IOException {
         UserService.addUser(user,profilePicture);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }

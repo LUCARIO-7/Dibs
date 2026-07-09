@@ -16,7 +16,9 @@ public class userService {
     userRepository userRepo;
     BCryptPasswordEncoder encoder= new BCryptPasswordEncoder(10);
     public void addUser(User user, MultipartFile profilePicture) throws IOException {
-        user.setProfilePicture(profilePicture.getBytes());
+        if (profilePicture != null && !profilePicture.isEmpty()) {
+            user.setProfilePicture(profilePicture.getBytes());
+        }
         user.setPassword(encoder.encode(user.getPassword()));
         userRepo.save(user);
     }
