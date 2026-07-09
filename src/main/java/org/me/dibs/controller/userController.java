@@ -8,7 +8,9 @@ import org.me.dibs.service.ItemService;
 import org.me.dibs.service.JwtService;
 import org.me.dibs.service.userService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.RememberMeAuthenticationToken;
@@ -50,12 +52,14 @@ public class userController {
         }
 
         String token=jwtService.generateToken(user.getUsername());
-        Cookie cookie= new Cookie("jwtoken", token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false);
-        cookie.setPath("/");
-        cookie.setMaxAge(24*60*60);
-        response.addCookie(cookie);
+        ResponseCookie cookie = ResponseCookie.from("jwtoken", token)
+                .httpOnly(true)
+                .secure(true)
+                .sameSite("None")
+                .path("/")
+                .maxAge(24 * 60 * 60)
+                .build();
+        response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
         return  "login successfull";
     }
     @GetMapping("/user")

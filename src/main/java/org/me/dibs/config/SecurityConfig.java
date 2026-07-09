@@ -41,7 +41,10 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http){
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        String frontendUrl = System.getenv("FRONTEND_URL");
+        String successRedirectUrl = (frontendUrl != null) ? frontendUrl : "http://localhost:5173/";
+
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request->
@@ -50,7 +53,7 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .oauth2Login(outh2-> outh2
                         .userInfoEndpoint(userInfo ->userInfo.oidcUserService(oidcUserSerivice))
-                        .defaultSuccessUrl("http://localhost:5173/"))
+                        .defaultSuccessUrl(successRedirectUrl))
                 .httpBasic(Customizer.withDefaults())
                 .sessionManagement(session->
                         session.sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED))
@@ -61,13 +64,15 @@ public class SecurityConfig {
         return http.build();
     }
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config){
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        String frontendUrl = System.getenv("FRONTEND_URL");
+        List<String> allowedOrigins = frontendUrl != null ? List.of(frontendUrl, "http://localhost:5173") : List.of("http://localhost:5173");
+        configuration.setAllowedOrigins(allowedOrigins);
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
