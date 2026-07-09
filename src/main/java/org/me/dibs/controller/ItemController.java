@@ -62,4 +62,13 @@ public class ItemController {
         Optional<Item> item=itemService.getItem(id);
         return new ResponseEntity(item,HttpStatus.OK);
     }
+    @GetMapping("/founditems/filter")
+    public ResponseEntity<List<Item>> filterItems(@RequestParam(name = "time") String time,
+                                                  @RequestParam(name = "location") String location)
+    {
+
+      List<Item> itemsBylocation=itemService.filterByLocation(location);
+      return new ResponseEntity<>(itemsBylocation,HttpStatus.OK);
+      
+    }
 }

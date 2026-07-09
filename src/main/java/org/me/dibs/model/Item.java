@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,7 +22,8 @@ public class Item {
     private byte[] image;
     private String location;
     private String contact;
-    private String time;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime time;
     private  Boolean isLost;
     private  Boolean isClaimed=false;
     @ManyToOne

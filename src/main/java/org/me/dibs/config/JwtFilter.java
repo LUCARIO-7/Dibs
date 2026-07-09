@@ -29,11 +29,13 @@ public class JwtFilter extends OncePerRequestFilter {
         String token=null;
         String username=null;
         Cookie[] cookies=request.getCookies();
-        for(Cookie cookie:cookies){
-           // System.out.println(cookie.getValue());
-            if(cookie.getName().equals("jwtoken")){
-                token=cookie.getValue();
-                break;
+        if (cookies != null) {
+            for(Cookie cookie:cookies){
+               // System.out.println(cookie.getValue());
+                if(cookie.getName().equals("jwtoken")){
+                    token=cookie.getValue();
+                    break;
+                }
             }
         }
 

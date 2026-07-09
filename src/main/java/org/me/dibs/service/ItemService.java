@@ -70,4 +70,10 @@ public class ItemService {
     public List<Item> getClaimedItems(String name) {
         return itemRepository.findByUser1UsernameAndIsClaimedTrue(name);
     }
+    @Transactional(readOnly = true)
+    public List<Item> filterByLocation(String location) {
+        if(location=="")
+            return itemRepository.findByIsLostFalse();
+        return itemRepository.findByLocation(location);
+    }
 }

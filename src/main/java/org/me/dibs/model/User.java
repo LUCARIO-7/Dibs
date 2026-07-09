@@ -25,7 +25,7 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Item> items;
-    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user1",cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Item>  claimedItems;
 }
