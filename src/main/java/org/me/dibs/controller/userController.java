@@ -26,7 +26,6 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5173/")
 public class userController {
     @Autowired
     AuthenticationManager authenticationManager;
