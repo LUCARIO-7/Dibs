@@ -68,6 +68,19 @@ public class ItemService {
     }
     @Transactional(readOnly = true)
     public List<Item> getClaimedItems(String name) {
+
         return itemRepository.findByUser1UsernameAndIsClaimedTrue(name);
+    }
+    @Transactional(readOnly = true)
+    public List<Item> getItemsbyLocation(String location){
+        return itemRepository.findByLocationAndIsLostFalse(location);
+    }
+    @Transactional(readOnly = true)
+    public  List<Item> getItemsBytime(int days){
+        List<Item> resItems,items;
+        items=itemRepository.findByIsLostFalse();
+        //TODO:implement logic
+        resItems=items;
+        return resItems;
     }
 }
