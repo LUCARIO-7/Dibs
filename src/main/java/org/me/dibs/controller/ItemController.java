@@ -25,6 +25,10 @@ public class ItemController {
         itemService.addItem(item,image,principal);
         return new ResponseEntity<>(principal.getName(),HttpStatus.ACCEPTED);
     }
+    @PostMapping("/allitems")
+    ResponseEntity<List<Item>> getAllItems() throws IOException {
+        return new ResponseEntity<>(itemService.getItems(),HttpStatus.ACCEPTED);
+    }
     @GetMapping("/lostitems")
     ResponseEntity<List<Item>> getLostItems(){
         return  new ResponseEntity<>(itemService.getLostItems(),HttpStatus.OK);
@@ -48,7 +52,7 @@ public class ItemController {
     }
     @GetMapping("/search/{name}")
     ResponseEntity<List<Item>> searchItem(@PathVariable String name,Principal principal){
-        List<Item> items=itemService.searchItem(name,principal);
+        List<Item> items=itemService.searchItem(name);
         return  new ResponseEntity<>(items,HttpStatus.OK);
     }
     @GetMapping("/claimitem/{itemid}")

@@ -2,7 +2,6 @@ package org.me.dibs.service;
 
 import org.me.dibs.Repository.ItemRepository;
 import org.me.dibs.model.Item;
-import org.me.dibs.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,14 +26,12 @@ public class ItemService {
     }
     @Transactional(readOnly = true)
     public List<Item> getMyLostItems(Principal principal){
-        List<Item> items=itemRepository.findByUserUsernameAndIsLostTrue(principal.getName());
-        return  items;
+        return itemRepository.findByUserUsernameAndIsLostTrue(principal.getName());
     }
     @Transactional(readOnly = true)
     public List<Item> getMyFoundItems(Principal principal){
         System.out.println(principal.getName());
-        List<Item> items=itemRepository.findByUserUsernameAndIsLostFalse(principal.getName());
-        return items;
+        return itemRepository.findByUserUsernameAndIsLostFalse(principal.getName());
     }
 
     public void removeItem(int i) {
@@ -42,7 +39,7 @@ public class ItemService {
         itemRepository.delete(it);
     }
     @Transactional(readOnly = true)
-    public List<Item> searchItem(String name, Principal principal) {
+    public List<Item> searchItem(String name) {
 
         return  itemRepository.findByNameIsContaining(name);
     }
@@ -82,5 +79,10 @@ public class ItemService {
         //TODO:implement logic
         resItems=items;
         return resItems;
+    }
+    @Transactional(readOnly = true)
+    public List<Item> getItems(){
+        List<Item> item=itemRepository.findAll();
+        return  item;
     }
 }
