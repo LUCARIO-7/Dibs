@@ -33,3 +33,7 @@ build/
 
 ### Agent Customizations ###
 .agents/
+
+# Local SonarQube script
+sonar.ps1
+
