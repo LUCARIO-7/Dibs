@@ -2,7 +2,7 @@ package org.me.dibs;
 
 import org.junit.jupiter.api.Test;
 import org.me.dibs.Repository.UserDetailRepository;
-import org.me.dibs.Repository.userRepository;
+import org.me.dibs.Repository.UserRepository;
 import org.me.dibs.model.User;
 import org.me.dibs.model.UserDetail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserDetailRepositoryTests {
 
     @Autowired
-    private userRepository userRepo;
+    private UserRepository userRepo;
 
     @Autowired
     private UserDetailRepository userDetailRepo;

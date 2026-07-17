@@ -32,4 +32,6 @@ public class User {
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonIgnore
     private UserDetail userDetail;
+
+    private String role = "ROLE_USER";
 }

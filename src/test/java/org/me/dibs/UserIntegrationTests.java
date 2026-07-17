@@ -2,10 +2,10 @@ package org.me.dibs;
 
 import org.junit.jupiter.api.Test;
 import org.me.dibs.Repository.UserDetailRepository;
-import org.me.dibs.Repository.userRepository;
+import org.me.dibs.Repository.UserRepository;
 import org.me.dibs.model.User;
 import org.me.dibs.model.UserDetail;
-import org.me.dibs.service.userService;
+import org.me.dibs.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -19,10 +19,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserIntegrationTests {
 
     @Autowired
-    private userService userService;
+    private UserService userService;
 
     @Autowired
-    private userRepository userRepo;
+    private UserRepository userRepo;
 
     @Autowired
     private UserDetailRepository userDetailRepo;

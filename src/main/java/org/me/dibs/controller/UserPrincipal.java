@@ -9,14 +9,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Collections;
 
-public class userPrincipal implements UserDetails {
+public class UserPrincipal implements UserDetails {
     User user;
-    public userPrincipal(User user){
+    public UserPrincipal(User user){
         this.user=user;
     }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singleton(new SimpleGrantedAuthority("USER"));
+        return Collections.singleton(new SimpleGrantedAuthority(user.getRole()));
     }
 
     @Override

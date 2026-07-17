@@ -11,19 +11,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class OidcService extends OidcUserService {
     @Autowired
-    userService UserService;
+    private UserService userService;
 
     @Override
     public OidcUser loadUser(OidcUserRequest userRequest) throws OAuth2AuthenticationException {
        OidcUser oidcUser=super.loadUser(userRequest);
        //String email=oidcUser.getEmail();
        String username=oidcUser.getName();
-       User user=UserService.getUser(username);
+       User user=userService.getUser(username);
        if(user==null){
            User user1=new User();
            user1.setUsername(username);
            user1.setPassword("");
-           UserService.addUser(user1);
+           userService.addUser(user1);
        }
         return oidcUser;
     }
